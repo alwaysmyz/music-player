@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow,ipcMain } = require('electron')
 //electron 已经完全加载
 app.on('ready', () => {
   //实例化一个window
@@ -13,15 +13,9 @@ app.on('ready', () => {
   })
   mainWindow.loadFile('index.html')
   mainWindow.webContents.openDevTools()
-  const secondWindow = new BrowserWindow({
-    width: 400,
-    height: 300,
-    //render进程中可以使用node api
-    webPreferences: {
-      nodeIntegration:true
-    },
-    //second window 附属于mainWindow
-    parent:mainWindow,
+  ipcMain.on('message', (event,arg) => {
+    console.log('arg---', arg)
+    // event.sender.send('reply', 'reply from mian')
+    mainWindow.send('reply', 'reply from MainWindow')
   })
-  secondWindow.loadFile('second.html')
 })
