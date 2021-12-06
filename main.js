@@ -11,7 +11,7 @@ app.on('ready', () => {
       contextIsolation:false,
     }
   })
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('./renderer/index.html')
   mainWindow.webContents.openDevTools()
   ipcMain.on('message', (event,arg) => {
     console.log('arg---', arg)
